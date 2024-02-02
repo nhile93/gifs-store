@@ -1,0 +1,32 @@
+.giphy-wrapper {
+  position: relative;
+
+  .search-area {
+
+    input {
+      height: 60px;
+      width: 100%;
+      padding: 6px 12px
+    }
+
+    button {
+      width: 150px;
+    }
+  }
+
+  .list-item {
+    column-count: 4;
+
+    .item {
+      border-radius: 6px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      max-width: 255px;
+
+      img {
+        width: 100%;
+        border-radius: 6px;
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+<div class="giphy-wrapper">
+  <div class="search-area d-flex justify-content-between my-3 my-xl-4">
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Enter search gif" (keyup.enter)="search()">
+    <button type="button" class="btn btn-primary" (click)="search()">Search</button>
+  </div>
+  <div class="clearfix list-item">
+    <div role="button" class="item" *ngFor="let gif of trendingGifs; let index = index">
+      <a class="d-block" [tabindex]="index" (click)="goDetail(gif.id, gif)">
+        <img [src]="gif.images.original.url" [alt]="gif.title">
+      </a>
+    </div>
+  </div>
+  <p-toast position="top-center" key="myToast"></p-toast>
+</div>
+<app-loading [isLoading]="isLoading"></app-loading>

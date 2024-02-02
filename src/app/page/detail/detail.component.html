@@ -1,0 +1,51 @@
+<div class="detail-wrapper mt-4">
+  <span role="button" class="back text-white mb-2 mb-xl-4" (click)="goBack()"><i class="pi pi-arrow-left"></i> Back</span>
+  <div class="row mt-2 mt-xl-4">
+    <div class="col-12 col-xl-3">
+      <div class="user-info d-flex align-item-center flex-wrap">
+        <ng-container *ngIf="gifItem.user != undefined else noUser">
+          <img [src]="gifItem.user.avatar_url" class="image avatar" width="50" height="50">
+          <div class="d-flex flex-column">
+            <span class="fs-6">{{gifItem.user.display_name}}</span>
+            <span class="text-white-50 fst-italic">{{"@"}} {{gifItem.user.username}}</span>
+          </div>
+        </ng-container>
+        <ng-template #noUser>
+          <div class="source-link pb-3">
+            <div>Source</div>
+            <a role="button" class="text-white-50 link">{{gifItem.source}}</a>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    <div class="col-12 col-xl-6">
+      <div class="text-white-50 mb-2 title">{{gifItem.title}}</div>
+      <img [src]="gifItem.images.original.url" class="d-block m-auto image">
+    </div>
+    <div class="col-12 col-xl-3">
+      <div class="text-white-50">Rating</div>
+      <div [ngSwitch]="gifItem.rating" class="rating" [ngClass]="{
+        'rating-g' : gifItem.rating == 'g',
+        'rating-pg' : gifItem.rating == 'pg',
+        'rating-pg-13' : gifItem.rating == 'pg-13',
+        'rating-r' : gifItem.rating == 'r',
+      }">
+        <div class="inner fs-4">
+          <ng-container *ngSwitchDefault>G</ng-container>
+          <ng-container *ngSwitchCase="'pg'">PG</ng-container>
+          <ng-container *ngSwitchCase="'pg-13'">PG 13</ng-container>
+          <ng-container *ngSwitchCase="'r'">R</ng-container>
+        </div>
+      </div>
+
+      <div class="mt-2">
+        <div>Source: {{gifItem.images.original.width}} x {{gifItem.images.original.height}}px</div>
+        <div>Size: {{convertSize(gifItem.images.original.size)}}</div>
+        <div>Frames: {{gifItem.images.original.frames}}</div>
+        <div>Uploaded: {{convertDate(gifItem.import_datetime)}}</div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+<app-loading [isLoading]="isLoading"></app-loading>
