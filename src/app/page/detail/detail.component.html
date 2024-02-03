@@ -1,7 +1,7 @@
 <div class="detail-wrapper mt-4">
   <span role="button" class="back text-white mb-2 mb-xl-4" (click)="goBack()"><i class="pi pi-arrow-left"></i> Back</span>
   <div class="row mt-2 mt-xl-4">
-    <div class="col-12 col-xl-3">
+    <div class="col-12 col-md-3 order-2 order-md-1 mt-3 mt-md-0">
       <div class="user-info d-flex align-item-center flex-wrap">
         <ng-container *ngIf="gifItem.user != undefined else noUser">
           <img [src]="gifItem.user.avatar_url" class="image avatar" width="50" height="50">
@@ -13,16 +13,16 @@
         <ng-template #noUser>
           <div class="source-link pb-3">
             <div>Source</div>
-            <a role="button" class="text-white-50 link">{{gifItem.source}}</a>
+            <a role="button" class="text-white-50 link" [href]="gifItem.source" target="_blank">{{gifItem.source}}</a>
           </div>
         </ng-template>
       </div>
     </div>
-    <div class="col-12 col-xl-6">
+    <div class="col-12 col-md-6 order-1 order-md-2">
       <div class="text-white-50 mb-2 title">{{gifItem.title}}</div>
       <img [src]="gifItem.images.original.url" class="d-block m-auto image">
     </div>
-    <div class="col-12 col-xl-3">
+    <div class="col-12 col-md-3 order-3 mt-3 mt-md-0">
       <div class="text-white-50">Rating</div>
       <div [ngSwitch]="gifItem.rating" class="rating" [ngClass]="{
         'rating-g' : gifItem.rating == 'g',

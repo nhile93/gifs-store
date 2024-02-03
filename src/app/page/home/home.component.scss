@@ -15,7 +15,7 @@
   }
 
   .list-item {
-    column-count: 4;
+    column-count: 2;
 
     .item {
       border-radius: 6px;
@@ -28,5 +28,19 @@
         border-radius: 6px;
       }
     }
+  }
+}
+
+@media screen and (min-width: 576px) {
+
+  .giphy-wrapper .list-item {
+    column-count: 3;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+
+  .giphy-wrapper .list-item {
+    column-count: 4;
   }
 }

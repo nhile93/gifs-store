@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -10,7 +10,7 @@ import { GiphyService } from 'src/app/services/giphy.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit, AfterViewInit, OnDestroy, AfterViewChecked {
+export class HomeComponent implements OnInit, AfterViewChecked {
   trendingGifs: any[] = [];
   searchQuery: string = '';
   isLoading: boolean = true;
@@ -25,11 +25,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy, AfterVie
     private messageService: MessageService
   ) {}
 
-  ngOnInit() {}
-
-  ngAfterViewInit() {
-    this.subscription = this.giphyService.getTrending(this.limit).subscribe((res: any) => {
-      this.trendingGifs = res;
+  ngOnInit() {
+    this.giphyService.getTrending(this.limit).subscribe({
+      next: (res) => { this.trendingGifs = res },
+      error: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          key: 'myToast',
+          detail:
+            "Couldn't get the trending Gifs, Please Hard Reload the browser",
+          life: 5000,
+        });
+      }
     });
   }
     
@@ -40,9 +48,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy, AfterVie
   }
 
   goDetail(id: any, item: any) {
-    setTimeout(() => {
-      this.detailGifService.on(item);
-    });
+    this.detailGifService.on(item);
     this.router.navigate(['/detail', id]);
   }
 
@@ -54,23 +60,26 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy, AfterVie
         summary: 'Warning',
         key: 'myToast',
         detail: "Search box shouldn't be empty",
-        life: 1000,
+        life: 3000,
       });
     } else {
       this.isLoading = true;
-      this.subscription = this.giphyService
-        .search(this.searchQuery)
-        .subscribe((res) => {
-          this.trendingGifs = res;
-          setTimeout(() => {
-            this.isLoading = false;
-          }, 2000);
-        });
+      this.giphyService.search(this.searchQuery).subscribe({
+        next: (res) => { this.trendingGifs = res; },
+        error: () => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            key: 'myToast',
+            detail: "Couldn't get the search result, Please try again",
+            life: 5000,
+          });
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      })
     }
-  }
-
-  ngOnDestroy() {
-    if (this.subscription) this.subscription.unsubscribe();
   }
 
   // TODO: scroll down to take another 60 items

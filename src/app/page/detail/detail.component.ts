@@ -1,5 +1,5 @@
 import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { DetailGifService } from 'src/app/services/detail-gif.service';
 import dayjs from 'dayjs';
 import { Subscription } from 'rxjs';
@@ -17,7 +17,7 @@ export class DetailComponent implements OnInit, AfterViewChecked, OnDestroy {
   constructor(
     private router: Router,
     private detailGifService: DetailGifService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.subscription = this.detailGifService.gifItemStore.subscribe(
