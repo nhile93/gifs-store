@@ -1,3 +1,8 @@
-### Development
+# Gifs Store
+Gifs Store from https://giphy.com/
+
+## Development
+```
 npm install
-ng serve
+npm start || ng serve
+```
